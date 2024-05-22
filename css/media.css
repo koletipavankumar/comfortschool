@@ -1,0 +1,34 @@
+@media screen and (max-width: 700px){
+
+    .icon{
+          display: none;
+     }
+    .logo{
+         display: none;
+         
+     }
+    .sn{
+         width: 100%;
+         height: 100%;
+         padding-left: 6px;
+     }
+    .carousel-inner img{
+      width: 100%;
+      height: 30%;  
+     }
+    .header {
+      padding-left:20px;
+     }
+    #gallery{
+      width: 80%;
+      height: 40%;
+     }
+    .columnmaps{
+        width: 100%;
+        height:30%;
+    }
+   
+    footer {
+       height:180%;
+    }
+}
