@@ -336,10 +336,10 @@ img {
   overflow: hidden;
   box-shadow: var(--shadow);
 }
-
+git 
 .media-card img {
   width: auto;
-  height: 280px;
+  height: auto;
   object-fit: cover;
 }
 
