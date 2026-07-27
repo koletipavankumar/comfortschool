@@ -1,0 +1,214 @@
+<%- include('partials/header', { site, page, pageTitle: 'Admin Dashboard', user }) %>
+
+<section class="page-title">
+  <div class="container">
+    <span class="eyebrow">Admin dashboard</span>
+    <h1>Manage school content and uploaded media</h1>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <% if (typeof success !== 'undefined') { %>
+      <div class="success">Update completed successfully.</div>
+    <% } %>
+    <% if (typeof error !== 'undefined') { %>
+      <div class="error">Please provide a valid file or selection.</div>
+    <% } %>
+
+    <div class="admin-grid">
+      <div class="form-card">
+        <h3>Update school content</h3>
+        <form action="/admin/content" method="post">
+          <div class="form-grid">
+            <label class="full-width">School name<input name="school_name" value="<%= site.school_name %>" /></label>
+            <label class="full-width">Tagline<input name="school_tagline" value="<%= site.school_tagline %>" /></label>
+            <label class="full-width">Address<input name="address" value="<%= site.address %>" /></label>
+            <label>Phone<input name="phone" value="<%= site.phone %>" /></label>
+            <label>Email<input name="email" value="<%= site.email %>" /></label>
+            <label>Working hours<input name="working_hours" value="<%= site.working_hours %>" /></label>
+            <label class="full-width">Classes offered<textarea name="classes_offered"><%= site.classes_offered %></textarea></label>
+            <label class="full-width">Transport details<textarea name="transport_details"><%= site.transport_details %></textarea></label>
+            <label class="full-width">About history<textarea name="about_history"><%= site.about_history %></textarea></label>
+            <label class="full-width">Mission<textarea name="mission"><%= site.mission %></textarea></label>
+            <label class="full-width">Vision<textarea name="vision"><%= site.vision %></textarea></label>
+            <label class="full-width">Highlights<textarea name="highlights"><%= site.highlights %></textarea></label>
+            <label class="full-width">Leadership message<textarea name="leadership_message"><%= site.leadership_message %></textarea></label>
+            <label class="full-width">Academics content<textarea name="academics_content"><%= site.academics_content %></textarea></label>
+            <label class="full-width">Admissions content<textarea name="admissions_content"><%= site.admissions_content %></textarea></label>
+            <label class="full-width">Facilities content<textarea name="facilities_content"><%= site.facilities_content %></textarea></label>
+            <label class="full-width">Achievements content<textarea name="achievements_content"><%= site.achievements_content %></textarea></label>
+            <label class="full-width">Contact intro<textarea name="contact_intro"><%= site.contact_intro %></textarea></label>
+            <label class="full-width">Hero title<input name="hero_title" value="<%= site.hero_title %>" /></label>
+            <label class="full-width">Hero subtitle<textarea name="hero_subtitle"><%= site.hero_subtitle %></textarea></label>
+            <label class="full-width">Hero CTA<input name="hero_cta" value="<%= site.hero_cta %>" /></label>
+            <button class="btn btn-primary full-width" type="submit">Save content</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="form-card">
+        <h3>Upload image</h3>
+        <form action="/admin/upload" method="post" enctype="multipart/form-data">
+          <div class="form-grid">
+            <label class="full-width">Title<input name="title" placeholder="Image title" /></label>
+            <label class="full-width">Category<select name="category">
+              <option value="banner">Banner</option>
+              <option value="gallery">Gallery</option>
+              <option value="event">Event</option>
+              <option value="staff">Staff</option>
+              <option value="school">School photo</option>
+            </select></label>
+            <label class="full-width">Select file<input type="file" name="image" required /></label>
+            <button class="btn btn-primary full-width" type="submit">Upload image</button>
+          </div>
+        </form>
+
+        <hr />
+
+        <h3>Replace an existing image</h3>
+        <form action="/admin/replace" method="post" enctype="multipart/form-data">
+          <div class="form-grid">
+            <label class="full-width">Select image<select name="mediaId">
+              <% mediaItems.forEach((item) => { %>
+                <option value="<%= item.id %>"><%= item.title %> (<%= item.category %>)</option>
+              <% }) %>
+            </select></label>
+            <label class="full-width">Choose replacement<input type="file" name="replacement" required /></label>
+            <button class="btn btn-primary full-width" type="submit">Replace image</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="section-heading" style="margin-top: 2.5rem;">
+      <h2>Manage content collections</h2>
+    </div>
+
+    <div class="admin-grid" style="margin-top: 1.5rem;">
+      <div class="form-card">
+        <h3>Add a homepage banner</h3>
+        <form action="/admin/banners" method="post" enctype="multipart/form-data">
+          <label>Title<input name="title" required /></label>
+          <label>Subtitle<input name="subtitle" /></label>
+          <label>Image<input type="file" name="image" /></label>
+          <button class="btn btn-primary" type="submit">Save banner</button>
+        </form>
+        <div class="media-list">
+          <% banners.forEach((banner) => { %>
+            <div class="media-card-list">
+              <img src="<%= banner.file_path %>" alt="<%= banner.title %>" />
+              <div class="content">
+                <h3><%= banner.title %></h3>
+                <p><%= banner.subtitle %></p>
+                <div class="inline-actions">
+                  <form action="/admin/banners/<%= banner.id %>/toggle" method="post">
+                    <button class="btn btn-small btn-primary" type="submit"><%= banner.active ? 'Hide' : 'Show' %></button>
+                  </form>
+                  <form action="/admin/banners/<%= banner.id %>/delete" method="post">
+                    <button class="btn btn-small btn-primary" type="submit">Delete</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+      </div>
+
+      <div class="form-card">
+        <h3>Add a gallery image</h3>
+        <form action="/admin/gallery" method="post" enctype="multipart/form-data">
+          <label>Title<input name="title" required /></label>
+          <label>Caption<textarea name="caption"></textarea></label>
+          <label>Image<input type="file" name="image" /></label>
+          <button class="btn btn-primary" type="submit">Save image</button>
+        </form>
+        <div class="media-list">
+          <% gallery.forEach((item) => { %>
+            <div class="media-card-list">
+              <img src="<%= item.file_path %>" alt="<%= item.title %>" />
+              <div class="content">
+                <h3><%= item.title %></h3>
+                <p><%= item.caption %></p>
+                <form action="/admin/gallery/<%= item.id %>/delete" method="post">
+                  <button class="btn btn-small btn-primary" type="submit">Delete</button>
+                </form>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+      </div>
+
+      <div class="form-card">
+        <h3>Add a staff profile</h3>
+        <form action="/admin/staff" method="post" enctype="multipart/form-data">
+          <label>Name<input name="name" required /></label>
+          <label>Role<input name="role" required /></label>
+          <label>Description<textarea name="description"></textarea></label>
+          <label>Photo<input type="file" name="photo" /></label>
+          <button class="btn btn-primary" type="submit">Save staff</button>
+        </form>
+        <div class="media-list">
+          <% staff.forEach((person) => { %>
+            <div class="media-card-list">
+              <img src="<%= person.file_path %>" alt="<%= person.title %>" />
+              <div class="content">
+                <h3><%= person.title %></h3>
+                <p><strong><%= person.role %></strong></p>
+                <p><%= person.description %></p>
+                <form action="/admin/staff/<%= person.id %>/delete" method="post">
+                  <button class="btn btn-small btn-primary" type="submit">Delete</button>
+                </form>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+      </div>
+
+      <div class="form-card">
+        <h3>Create a content page</h3>
+        <form action="/admin/pages" method="post">
+          <label>Title<input name="title" required /></label>
+          <label>Slug<input name="slug" placeholder="about" /></label>
+          <label>Content<textarea name="content" rows="6"></textarea></label>
+          <button class="btn btn-primary" type="submit">Save page</button>
+        </form>
+        <div class="media-list">
+          <% pages.forEach((page) => { %>
+            <div class="media-card-list">
+              <div class="content">
+                <h3><%= page.title %></h3>
+                <p><a href="/pages/<%= page.slug %>" target="_blank">/pages/<%= page.slug %></a></p>
+                <form action="/admin/pages/<%= page.id %>/delete" method="post">
+                  <button class="btn btn-small btn-primary" type="submit">Delete</button>
+                </form>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-heading" style="margin-top: 2.5rem;">
+      <h2>Uploaded media</h2>
+    </div>
+    <div class="media-list">
+      <% mediaItems.forEach((item) => { %>
+        <div class="media-card-list">
+          <img src="<%= item.file_path %>" alt="<%= item.title %>" />
+          <div class="content">
+            <h3><%= item.title %></h3>
+            <p><strong>Category:</strong> <%= item.category %></p>
+            <div class="inline-actions">
+              <form action="/admin/media/<%= item.id %>/delete" method="post">
+                <button class="btn btn-small btn-primary" type="submit">Delete</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer', { site }) %>

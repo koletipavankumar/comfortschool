@@ -1,0 +1,29 @@
+<%- include('partials/header', { site, page, pageTitle: 'Academics', user }) %>
+
+<section class="page-title">
+  <div class="container">
+    <span class="eyebrow">Academics</span>
+    <h1>Structured learning that inspires excellence</h1>
+    <p>Our academic approach combines strong fundamentals, personalized support and future-ready skills.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container split-grid">
+    <div class="form-card">
+      <h3>Academic focus</h3>
+      <p><%= site.academics_content %></p>
+    </div>
+    <div class="form-card">
+      <h3>What students experience</h3>
+      <ul class="u-list">
+        <li>Concept-based learning and clear classroom instruction</li>
+        <li>Regular assessment and parent communication</li>
+        <li>Language, communication and life skills support</li>
+        <li>Opportunities for science, technology and arts participation</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer', { site }) %>

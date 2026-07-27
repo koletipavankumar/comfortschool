@@ -1,0 +1,47 @@
+<%- include('partials/header', { site, page, pageTitle: 'Contact Us', user }) %>
+
+<section class="page-title">
+  <div class="container">
+    <span class="eyebrow">Contact us</span>
+    <h1>We’d love to hear from you</h1>
+    <p><%= site.contact_intro %></p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container split-grid">
+    <div class="form-card">
+      <h3>Get in touch</h3>
+      <form action="/contact" method="post">
+        <div class="form-grid">
+          <label>
+            Name
+            <input name="name" placeholder="Your name" required />
+          </label>
+          <label>
+            Email
+            <input type="email" name="email" placeholder="your@email.com" required />
+          </label>
+          <label>
+            Phone
+            <input name="phone" placeholder="Phone number" />
+          </label>
+          <label class="full-width">
+            Message
+            <textarea name="message" placeholder="Tell us about your query" required></textarea>
+          </label>
+          <button class="btn btn-primary full-width" type="submit">Send message</button>
+        </div>
+      </form>
+    </div>
+    <div class="form-card">
+      <h3>Connect with the school</h3>
+      <p><strong>Address</strong><br /><%= site.address %></p>
+      <p><strong>Phone</strong><br /><%= site.phone %></p>
+      <p><strong>Email</strong><br /><%= site.email %></p>
+      <p><strong>Working hours</strong><br /><%= site.working_hours %></p>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer', { site }) %>

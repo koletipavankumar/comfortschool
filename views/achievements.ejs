@@ -1,0 +1,28 @@
+<%- include('partials/header', { site, page, pageTitle: 'Achievements', user }) %>
+
+<section class="page-title">
+  <div class="container">
+    <span class="eyebrow">Achievements</span>
+    <h1>Celebrating student success and growth</h1>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container split-grid">
+    <div class="form-card">
+      <h3>School recognition</h3>
+      <p><%= site.achievements_content %></p>
+    </div>
+    <div class="form-card">
+      <h3>Recent highlights</h3>
+      <ul class="u-list">
+        <li>Academic excellence across classes</li>
+        <li>Performing arts and cultural participation</li>
+        <li>Sports and leadership showcase events</li>
+        <li>Community engagement and values-based initiatives</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer', { site }) %>

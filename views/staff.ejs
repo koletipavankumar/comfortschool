@@ -1,0 +1,28 @@
+<%- include('partials/header', { site, page, pageTitle: 'Staff', user }) %>
+
+<section class="page-title">
+  <div class="container">
+    <span class="eyebrow">Staff & teachers</span>
+    <h1>Meet the educators and leaders behind the school</h1>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="gallery-grid">
+      <% if (staff && staff.length) { %>
+        <% staff.forEach((person) => { %>
+          <div class="card">
+            <img src="<%= person.file_path %>" alt="<%= person.title %>" style="height: 260px; object-fit: cover; width: 100%; border-radius: 1rem;" />
+            <h3><%= person.title %></h3>
+            <p>Staff image uploaded through the admin panel.</p>
+          </div>
+        <% }) %>
+      <% } else { %>
+        <div class="card">No staff images have been uploaded yet.</div>
+      <% } %>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer', { site }) %>

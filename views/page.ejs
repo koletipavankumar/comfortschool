@@ -1,0 +1,18 @@
+<%- include('partials/header', { site, page, pageTitle: pageContent.title, user }) %>
+
+<section class="page-title">
+  <div class="container">
+    <span class="eyebrow">Content page</span>
+    <h1><%= pageContent.title %></h1>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="card">
+      <%- content %>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer', { site }) %>

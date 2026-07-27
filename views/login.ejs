@@ -1,0 +1,27 @@
+<%- include('partials/header', { site, page, pageTitle: 'Admin Login', user }) %>
+
+<section class="section">
+  <div class="container">
+    <div class="form-card" style="max-width: 480px; margin: 2rem auto;">
+      <h2>Admin login</h2>
+      <% if (typeof error !== 'undefined') { %>
+        <div class="error">Invalid login credentials.</div>
+      <% } %>
+      <form action="/admin/login" method="post">
+        <div class="form-grid">
+          <label class="full-width">
+            Username
+            <input name="username" required />
+          </label>
+          <label class="full-width">
+            Password
+            <input type="password" name="password" required />
+          </label>
+          <button class="btn btn-primary full-width" type="submit">Sign in</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer', { site }) %>

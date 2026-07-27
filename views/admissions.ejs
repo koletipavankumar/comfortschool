@@ -1,0 +1,30 @@
+<%- include('partials/header', { site, page, pageTitle: 'Admissions', user }) %>
+
+<section class="page-title">
+  <div class="container">
+    <span class="eyebrow">Admissions</span>
+    <h1>Start your child’s journey with us</h1>
+    <p>Admissions are open for a wide range of classes and we welcome visits from families.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container split-grid">
+    <div class="form-card">
+      <h3>Admissions process</h3>
+      <p><%= site.admissions_content %></p>
+      <p>Families can contact us for school tours, fee guidance and class availability.</p>
+    </div>
+    <div class="form-card">
+      <h3>What to bring</h3>
+      <ul class="u-list">
+        <li>Birth certificate or age proof</li>
+        <li>Previous academic records</li>
+        <li>Address proof and recent photos</li>
+        <li>Parent contact information</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer', { site }) %>

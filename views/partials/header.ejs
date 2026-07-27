@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= site.school_name %> | <%= typeof pageTitle !== 'undefined' ? pageTitle : 'School website' %></title>
+    <meta name="description" content="Modern school website for Comfort Grammar School with dynamic gallery, staff, academics and admissions content." />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="topbar">
+      <div class="container topbar-content">
+        <div class="topbar-links">
+          <a href="tel:<%= site.phone %>"><i class="fa-solid fa-phone"></i> <%= site.phone %></a>
+          <a href="mailto:<%= site.email %>"><i class="fa-solid fa-envelope"></i> <%= site.email %></a>
+        </div>
+        <div class="topbar-social">
+          <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+          <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <header class="site-header">
+      <div class="container nav-shell">
+        <a href="/" class="brand">
+          <img src="/images/mainlogo.png" alt="School logo" class="brand-logo" />
+          <span class="brand-name">
+            <span class="brand-title"><%= site.school_name %></span>
+            <span class="brand-subtitle">LEARN TO SERVE </span>
+          </span>
+        </a>
+        <button class="nav-toggle" aria-label="Open menu">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <nav class="nav-links">
+          <a class="<%= page === 'home' ? 'active' : '' %>" href="/">Home</a>
+          <a class="<%= page === 'about' ? 'active' : '' %>" href="/about">About</a>
+          <a class="<%= page === 'school-information' ? 'active' : '' %>" href="/school-information">School Information</a>
+          <a class="<%= page === 'academics' ? 'active' : '' %>" href="/academics">Academics</a>
+          <a class="<%= page === 'admissions' ? 'active' : '' %>" href="/admissions">Admissions</a>
+          <a class="<%= page === 'facilities' ? 'active' : '' %>" href="/facilities">Facilities</a>
+          <a class="<%= page === 'achievements' ? 'active' : '' %>" href="/achievements">Achievements</a>
+          <a class="<%= page === 'gallery' ? 'active' : '' %>" href="/gallery">Gallery</a>
+          <a class="<%= page === 'staff' ? 'active' : '' %>" href="/staff">Staff</a>
+          <a class="<%= page === 'contact' ? 'active' : '' %>" href="/contact">Contact</a>
+          <% if (user) { %>
+            <a href="/admin">Admin</a>
+          <% } %>
+        </nav>
+      </div>
+    </header>

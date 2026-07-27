@@ -1,0 +1,45 @@
+<%- include('partials/header', { site, page, pageTitle: 'About the School', user }) %>
+
+<section class="page-title">
+  <div class="container">
+    <span class="eyebrow">About the school</span>
+    <h1>Our story, mission and leadership</h1>
+    <p>Comfort Grammar School is committed to academic excellence, values and lifelong learning.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container split-grid">
+    <div>
+      <h2>School history</h2>
+      <p><%= site.about_history %></p>
+      <h2>Mission</h2>
+      <p><%= site.mission %></p>
+      <h2>Vision</h2>
+      <p><%= site.vision %></p>
+    </div>
+    <div class="form-card">
+      <h3>Key highlights</h3>
+      <ul class="u-list">
+        <% highlights.forEach((highlight) => { %>
+          <li><%= highlight %></li>
+        <% }) %>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="background: #f7f9fd;">
+  <div class="container split-grid">
+    <div class="form-card">
+      <h3>Leadership message</h3>
+      <p><%= site.leadership_message %></p>
+    </div>
+    <div class="form-card">
+      <h3>Why families trust us</h3>
+      <p>We combine strong academics with activities, careful monitoring and a joyful campus environment so every child can flourish.</p>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer', { site }) %>

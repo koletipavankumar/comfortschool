@@ -1,0 +1,28 @@
+<%- include('partials/header', { site, page, pageTitle: 'Facilities', user }) %>
+
+<section class="page-title">
+  <div class="container">
+    <span class="eyebrow">Facilities</span>
+    <h1>Campus amenities designed for learning and safety</h1>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container split-grid">
+    <div class="form-card">
+      <h3>Facilities overview</h3>
+      <p><%= site.facilities_content %></p>
+    </div>
+    <div class="form-card">
+      <h3>Highlights</h3>
+      <ul class="u-list">
+        <li>Smart classrooms and digital resources</li>
+        <li>Science, computer and library facilities</li>
+        <li>Sports and co-curricular rooms</li>
+        <li>Secure campus and reliable transport support</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer', { site }) %>

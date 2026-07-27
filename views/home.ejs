@@ -1,0 +1,122 @@
+<%- include('partials/header', { site, page, pageTitle: 'Home', user }) %>
+
+<section class="hero">
+  <div class="hero-slider">
+    <% if (banners && banners.length) { %>
+      <% banners.forEach((banner, index) => { %>
+        <div class="slide <%= index === 0 ? 'active' : '' %>" style="background-image: url('<%= banner.file_path %>');"></div>
+      <% }) %>
+    <% } else { %>
+      <div class="slide active" style="background-image: linear-gradient(120deg, rgba(8,49,79,0.85), rgba(15,76,129,0.3));"></div>
+    <% } %>
+  </div>
+  <div class="hero-content">
+    <span class="eyebrow"><i class="fa fa-graduation-cap"></i> Trusted school community</span>
+    <h1><%= site.hero_title %></h1>
+    <p class="lead"><%= site.hero_subtitle %></p>
+    <div class="hero-actions">
+      <a class="btn btn-secondary" href="/about">Discover More</a>
+    </div>
+    <div class="hero-snippet">
+      <span class="badge"><i class="fa fa-check"></i> Modern classrooms</span>
+      <span class="badge"><i class="fa fa-check"></i> Safe transport</span>
+      <span class="badge"><i class="fa fa-check"></i> Holistic development</span>
+    </div>
+  </div>
+</section>
+
+<section class="page-title">
+  <div class="container">
+    <span class="eyebrow">Welcome to our school</span>
+    <h1>Comfort Grammar School at a glance</h1>
+    <p>Discover the academic experience, campus facilities and student achievements in one place.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-heading">
+      <span class="eyebrow">Why parents choose us</span>
+      <h2>A school shaped by values, excellence and care</h2>
+      <p><%= site.about_history %></p>
+    </div>
+    <div class="card-grid">
+      <article class="card">
+        <div class="icon-pill"><i class="fa fa-book"></i></div>
+        <h3>Academics with purpose</h3>
+        <p><%= site.academics_content %></p>
+      </article>
+      <article class="card">
+        <div class="icon-pill"><i class="fa fa-users"></i></div>
+        <h3>Admissions made simple</h3>
+        <p><%= site.admissions_content %></p>
+      </article>
+      <article class="card">
+        <div class="icon-pill"><i class="fa fa-university"></i></div>
+        <h3>Facilities for growth</h3>
+        <p><%= site.facilities_content %></p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="background: linear-gradient(180deg, #ffffff 0%, #f7f9fd 100%);">
+  <div class="container split-grid">
+    <div>
+      <span class="eyebrow">About our school</span>
+      <h2>Learning that strengthens character and confidence</h2>
+      <p><%= site.about_history %></p>
+      <ul class="u-list">
+        <% highlights.forEach((highlight) => { %>
+          <li><%= highlight %></li>
+        <% }) %>
+      </ul>
+    </div>
+    <div class="media-card">
+      <% if (gallery && gallery.length) { %>
+        <img src="<%= gallery[0].file_path %>" alt="<%= gallery[0].title %>" />
+      <% } else { %>
+        <img src="/uploads/placeholder.svg" alt="School image" />
+      <% } %>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="metrics">
+      <div class="metric-card"><strong>25+</strong><span>Years of trusted education</span></div>
+      <div class="metric-card"><strong>500+</strong><span>Students inspired</span></div>
+      <div class="metric-card"><strong>30+</strong><span>Dedicated staff</span></div>
+      <div class="metric-card"><strong>100%</strong><span>Safe and secure campus</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-heading">
+      <span class="eyebrow">See our school in action</span>
+      <h2>Recent achievements, campus life and faculty</h2>
+    </div>
+    <div class="card-grid">
+      <article class="card">
+        <h3>Achievements</h3>
+        <p><%= site.achievements_content %></p>
+        <a class="btn btn-small btn-primary" href="/achievements">Read more</a>
+      </article>
+      <article class="card">
+        <h3>Gallery</h3>
+        <p>View photos of campus, events and celebrations updated automatically from the admin panel.</p>
+        <a class="btn btn-small btn-primary" href="/gallery">Visit gallery</a>
+      </article>
+      <article class="card">
+        <h3>Staff</h3>
+        <p>Meet the dedicated teachers and leaders who help every child grow with confidence.</p>
+        <a class="btn btn-small btn-primary" href="/staff">Meet the team</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer', { site }) %>

@@ -1,0 +1,27 @@
+<%- include('partials/header', { site, page, pageTitle: 'Gallery', user }) %>
+
+<section class="page-title">
+  <div class="container">
+    <span class="eyebrow">Gallery</span>
+    <h1>Explore campus life, events and school moments</h1>
+    <p>New images appear automatically from the admin upload panel.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="gallery-grid">
+      <% if (gallery && gallery.length) { %>
+        <% gallery.forEach((item) => { %>
+          <div class="gallery-item">
+            <img src="<%= item.file_path %>" alt="<%= item.title %>" />
+          </div>
+        <% }) %>
+      <% } else { %>
+        <div class="card">No images are available yet. Upload gallery photos from the admin panel.</div>
+      <% } %>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer', { site }) %>

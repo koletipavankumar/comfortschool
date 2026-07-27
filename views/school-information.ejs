@@ -1,0 +1,66 @@
+<%- include('partials/header', { site, page, pageTitle: 'School Information', user }) %>
+
+<section class="page-title">
+  <div class="container">
+    <span class="eyebrow">School information</span>
+    <h1>Everything you need to know about the campus</h1>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container card-grid">
+    <article class="card">
+      <div class="icon-pill"><i class="fa fa-university"></i></div>
+      <h3>School name</h3>
+      <p><%= site.school_name %></p>
+    </article>
+    <article class="card">
+      <div class="icon-pill"><i class="fa fa-map-marker"></i></div>
+      <h3>Address</h3>
+      <p><%= site.address %></p>
+    </article>
+    <article class="card">
+      <div class="icon-pill"><i class="fa fa-phone"></i></div>
+      <h3>Phone</h3>
+      <p><%= site.phone %></p>
+    </article>
+    <article class="card">
+      <div class="icon-pill"><i class="fa fa-envelope"></i></div>
+      <h3>Email</h3>
+      <p><%= site.email %></p>
+    </article>
+    <article class="card">
+      <div class="icon-pill"><i class="fa fa-clock-o"></i></div>
+      <h3>Working hours</h3>
+      <p><%= site.working_hours %></p>
+    </article>
+    <article class="card">
+      <div class="icon-pill"><i class="fa fa-bus"></i></div>
+      <h3>Transport details</h3>
+      <p><%= site.transport_details %></p>
+    </article>
+  </div>
+</section>
+
+<section class="section" style="background: #f7f9fd;">
+  <div class="container split-grid">
+    <div class="form-card">
+      <h3>Classes offered</h3>
+      <ul class="u-list">
+        <% classes.forEach((className) => { %>
+          <li><%= className %></li>
+        <% }) %>
+      </ul>
+    </div>
+    <div class="form-card">
+      <h3>Facilities</h3>
+      <ul class="u-list">
+        <% facilities.forEach((facility) => { %>
+          <li><%= facility %></li>
+        <% }) %>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer', { site }) %>
