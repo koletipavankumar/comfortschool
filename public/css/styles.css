@@ -338,7 +338,7 @@ img {
 }
 
 .media-card img {
-  width: 100%;
+  width: auto;
   height: 280px;
   object-fit: cover;
 }
