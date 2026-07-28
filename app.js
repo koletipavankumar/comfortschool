@@ -177,7 +177,7 @@ async function initDb() {
     ['phone', '+91 99499 00300'],
     ['email', 'vinay.comfort@gmail.com'],
     ['working_hours', 'Mon - Sat: 8:30 AM - 4:00 PM'],
-    ['classes_offered', 'Nursery\nLKG\nUKG\nClass 1 - 10'],
+    ['classes_offered', 'Nursery\nLKG\nUKG\nClass 1 - 7'],
     ['transport_details', 'Safe transport service is available through selected routes and villages.'],
     ['about_history', 'Comfort Grammar School has been shaping young minds with quality instruction, discipline, and care for over two decades.'],
     ['mission', 'To create a joyful, inclusive and inspiring learning environment that helps every child grow academically and personally.'],
