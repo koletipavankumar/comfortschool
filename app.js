@@ -185,7 +185,7 @@ async function initDb() {
     ['highlights', 'Experienced faculty\nModern classrooms\nSafe campus\nValue-based education\nStrong co-curricular focus'],
     ['leadership_message', 'We believe every child deserves academic excellence, moral strength, and the confidence to thrive.'],
     ['academics_content', 'Our academics focus on conceptual understanding, language development, STEM exposure, and individualized support.'],
-    ['admissions_content', 'Admissions are open for Nursery to Class 10. Parents can visit campus or use the admissions form to start the process.'],
+    ['admissions_content', 'Admissions are open for Nursery to Class 7. Parents can visit campus or use the admissions form to start the process.'],
     ['facilities_content', 'The school offers smart classrooms, a library, science and computer labs, transport services, sports facilities, and a safe campus.'],
     ['achievements_content', 'Students consistently excel in academics, sports, cultural events, and public speaking through well-rounded school programs.'],
     ['contact_intro', 'We welcome visits, inquiries, and admissions requests from parents and guardians.'],
