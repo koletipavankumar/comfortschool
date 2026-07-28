@@ -30,12 +30,5 @@ A modern, responsive school website for Comfort Grammar School with:
    ```
 3. Open `http://localhost:3000`
 
-## Admin access
-Default admin credentials:
-- Username: `admin`
-- Password: `comfortschool`
 
-You can override these in the environment:
-```bash
-ADMIN_USERNAME=yourname ADMIN_PASSWORD=yourpassword npm start
-```
+    
