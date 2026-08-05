@@ -25,6 +25,13 @@ app.use(express.json());
 
 const SESSION_MAX_AGE_MS = 1000 * 60 * 30;
 
+// When the app is behind a reverse proxy (load balancer / TLS terminator),
+// enable trust proxy so express can detect req.secure correctly and
+// express-session will send secure cookies appropriately.
+// Using 'true' trusts the first proxy in front or honors X-Forwarded-* headers
+// from the proxy chain. Adjust as needed for your deployment topology.
+app.set('trust proxy', true);
+
 app.use(session({
   secret: process.env.SESSION_SECRET || 'comfort-school-session-secret',
   resave: false,
@@ -649,6 +656,17 @@ app.get('/admin/login', csrfProtection, async (req, res) => {
 
 app.post('/admin/login', csrfProtection, async (req, res) => {
   try {
+    // Optional debug logging to aid diagnosing CSRF/session issues in production.
+    // Enable by setting DEBUG_LOGIN=1 in the environment (do not enable long-term).
+    if (process.env.DEBUG_LOGIN === '1') {
+      console.log('LOGIN DEBUG', {
+        secure: req.secure,
+        xForwardedProto: req.headers['x-forwarded-proto'] || null,
+        cookiePresent: !!req.headers.cookie,
+        sessionID: req.sessionID || null
+      });
+    }
+
     const username = String(req.body.username || '').trim();
     const password = String(req.body.password || '');
 
