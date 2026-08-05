@@ -1,5 +1,5 @@
-<%- include('partials/header', { site, page, pageTitle: 'Admin Dashboard', user }) %>
-
+<%- include('partials/header', { site, page, pageTitle: 'Admin Dashboard' }) %>
+<%- include('partials/admin-bar', { sessionMaxAgeMs: sessionMaxAgeMs }) %>
 <section class="page-title">
   <div class="container">
     <span class="eyebrow">Admin dashboard</span>
@@ -9,10 +9,10 @@
 
 <section class="section">
   <div class="container">
-    <% if (typeof success !== 'undefined') { %>
+    <% if (typeof success !== 'undefined' && success) { %>
       <div class="success">Update completed successfully.</div>
     <% } %>
-    <% if (typeof error !== 'undefined') { %>
+    <% if (typeof error !== 'undefined' && error) { %>
       <div class="error">Please provide a valid file or selection.</div>
     <% } %>
 
@@ -48,18 +48,32 @@
       </div>
 
       <div class="form-card">
-        <h3>Upload image</h3>
+        <h3>About our school image (homepage)</h3>
+        <p class="form-help">Upload the image shown beside the "About our school" section on the home page.</p>
+        <% if (site.about_school_image) { %>
+          <div class="media-card-list" style="margin-bottom: 1rem;">
+            <img src="<%= site.about_school_image %>" alt="Current about school image" />
+          </div>
+        <% } %>
+        <form action="/admin/about-image" method="post" enctype="multipart/form-data">
+          <div class="form-grid">
+            <label class="full-width">Select image<input type="file" name="image" accept="image/*" required /></label>
+            <button class="btn btn-primary full-width" type="submit">Upload about school image</button>
+          </div>
+        </form>
+
+        <hr />
+
+        <h3>Upload banner or event image</h3>
         <form action="/admin/upload" method="post" enctype="multipart/form-data">
           <div class="form-grid">
             <label class="full-width">Title<input name="title" placeholder="Image title" /></label>
             <label class="full-width">Category<select name="category">
               <option value="banner">Banner</option>
-              <option value="gallery">Gallery</option>
               <option value="event">Event</option>
               <option value="staff">Staff</option>
-              <option value="school">School photo</option>
             </select></label>
-            <label class="full-width">Select file<input type="file" name="image" required /></label>
+            <label class="full-width">Select file<input type="file" name="image" accept="image/*" required /></label>
             <button class="btn btn-primary full-width" type="submit">Upload image</button>
           </div>
         </form>
@@ -74,7 +88,7 @@
                 <option value="<%= item.id %>"><%= item.title %> (<%= item.category %>)</option>
               <% }) %>
             </select></label>
-            <label class="full-width">Choose replacement<input type="file" name="replacement" required /></label>
+            <label class="full-width">Choose replacement<input type="file" name="replacement" accept="image/*" required /></label>
             <button class="btn btn-primary full-width" type="submit">Replace image</button>
           </div>
         </form>
@@ -91,7 +105,7 @@
         <form action="/admin/banners" method="post" enctype="multipart/form-data">
           <label>Title<input name="title" required /></label>
           <label>Subtitle<input name="subtitle" /></label>
-          <label>Image<input type="file" name="image" /></label>
+          <label>Image<input type="file" name="image" accept="image/*" /></label>
           <button class="btn btn-primary" type="submit">Save banner</button>
         </form>
         <div class="media-list">
@@ -116,12 +130,13 @@
       </div>
 
       <div class="form-card">
-        <h3>Add a gallery image</h3>
+        <h3>Upload individual gallery image</h3>
+        <p class="form-help">Each image is uploaded separately and appears on the Gallery page.</p>
         <form action="/admin/gallery" method="post" enctype="multipart/form-data">
           <label>Title<input name="title" required /></label>
           <label>Caption<textarea name="caption"></textarea></label>
-          <label>Image<input type="file" name="image" /></label>
-          <button class="btn btn-primary" type="submit">Save image</button>
+          <label>Image<input type="file" name="image" accept="image/*" required /></label>
+          <button class="btn btn-primary" type="submit">Upload gallery image</button>
         </form>
         <div class="media-list">
           <% gallery.forEach((item) => { %>

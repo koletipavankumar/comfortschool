@@ -74,8 +74,8 @@
       </ul>
     </div>
     <div class="media-card">
-      <% if (gallery && gallery.length) { %>
-        <img src="<%= gallery[0].file_path %>" alt="<%= gallery[0].title %>" />
+      <% if (site.about_school_image) { %>
+        <img src="<%= site.about_school_image %>" alt="About our school" />
       <% } else { %>
         <img src="/uploads/placeholder.svg" alt="School image" />
       <% } %>

@@ -600,6 +600,58 @@ textarea {
   margin-bottom: 1rem;
 }
 
+.admin-bar {
+  background: var(--primary-dark);
+  color: white;
+  padding: 0.65rem 0;
+}
+
+.admin-bar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.admin-bar-label {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.admin-bar-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.admin-session-timer {
+  font-size: 0.9rem;
+  opacity: 0.95;
+}
+
+.admin-session-warning {
+  color: #ffd166;
+  font-weight: 600;
+}
+
+.admin-bar .btn-secondary {
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.admin-bar .btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.form-help {
+  color: var(--muted);
+  font-size: 0.92rem;
+  margin: 0 0 1rem;
+}
+
 @media (max-width: 920px) {
   .card-grid,
   .gallery-grid,

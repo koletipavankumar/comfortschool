@@ -1,0 +1,12 @@
+<div class="admin-bar">
+  <div class="container admin-bar-inner">
+    <span class="admin-bar-label">Admin panel</span>
+    <div class="admin-bar-actions">
+      <span class="admin-session-timer" id="session-timer" data-max-age="<%= sessionMaxAgeMs %>">
+        Session expires in <strong id="session-countdown">--:--</strong>
+      </span>
+      <a class="btn btn-small btn-secondary" href="/admin/logout">Logout</a>
+    </div>
+  </div>
+</div>
+<script src="/js/admin-session.js"></script>

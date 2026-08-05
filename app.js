@@ -20,12 +20,24 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+
+const SESSION_MAX_AGE_MS = 1000 * 60 * 30;
+
 app.use(session({
   secret: process.env.SESSION_SECRET || 'comfort-school-session-secret',
   resave: false,
   saveUninitialized: false,
-  cookie: { maxAge: 1000 * 60 * 60 * 8 }
+  rolling: true,
+  cookie: { maxAge: SESSION_MAX_AGE_MS }
 }));
+
+
+app.use((req, res, next) => {
+  res.locals.sessionMaxAgeMs = SESSION_MAX_AGE_MS;
+  res.locals.isAdmin = !!req.session.admin;
+  next();
+});
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, uploadDir),
@@ -191,7 +203,8 @@ async function initDb() {
     ['contact_intro', 'We welcome visits, inquiries, and admissions requests from parents and guardians.'],
     ['hero_title', 'Excellence in learning, leadership and care'],
     ['hero_subtitle', 'Comfort Grammar School offers modern education, value-based teaching, and a nurturing environment for every learner.'],
-    ['hero_cta', 'Apply Now']
+    ['hero_cta', 'Apply Now'],
+    ['about_school_image', '']
   ];
 
   for (const [key, value] of defaults) {
@@ -240,10 +253,25 @@ async function initDb() {
 }
 
 function requireAdmin(req, res, next) {
-  if (req.session && req.session.admin) {
-    return next();
+
+  if (!req.session.admin) {
+    return res.redirect('/admin/login');
   }
-  return res.redirect('/admin/login');
+
+  const SESSION_TIMEOUT = SESSION_MAX_AGE_MS;
+
+  if (
+    req.session.lastActivity &&
+    Date.now() - req.session.lastActivity > SESSION_TIMEOUT
+  ) {
+    return req.session.destroy(() => {
+      res.redirect('/admin/login?expired=1');
+    });
+  }
+
+  req.session.lastActivity = Date.now();
+
+  next();
 }
 
 async function getPageData(req, extra = {}) {
@@ -282,7 +310,8 @@ async function getPageData(req, extra = {}) {
     })),
     pages: contentPages,
     mediaItems,
-    user: req.session.admin ? { username: req.session.adminUsername } : null,
+    isAdmin: !!req.session.admin,
+    sessionMaxAgeMs: SESSION_MAX_AGE_MS,
     highlights: parseList(site.highlights),
     classes: parseList(site.classes_offered),
     facilities: parseList(site.facilities_content),
@@ -367,7 +396,8 @@ app.post('/admin/login', (req, res) => {
 
   if (req.body.username === username && req.body.password === password) {
     req.session.admin = true;
-    req.session.adminUsername = username;
+  req.session.loginTime = Date.now();
+  req.session.lastActivity = Date.now();
     return res.redirect('/admin');
   }
 
@@ -380,9 +410,18 @@ app.get('/admin/logout', (req, res) => {
   });
 });
 
+
 app.get('/admin', requireAdmin, async (req, res) => {
-  const data = await getPageData(req, { page: 'admin', pageTitle: 'Admin Dashboard' });
+
+  const data = await getPageData(req, {
+    page: 'admin',
+    pageTitle: 'Admin Dashboard'
+  });
+
+  console.log(data.sessionMaxAgeMs);   // <-- Add this
+
   res.render('admin', data);
+
 });
 
 app.post('/admin/banners', requireAdmin, upload.single('image'), async (req, res) => {
@@ -427,12 +466,36 @@ app.post('/admin/banners/:id/delete', requireAdmin, async (req, res) => {
 app.post('/admin/gallery', requireAdmin, upload.single('image'), async (req, res) => {
   try {
     const { title, caption } = req.body;
-    const imagePath = req.file ? `/uploads/${req.file.filename}` : '/uploads/gallery-1.svg';
+    if (!req.file) {
+      return res.redirect('/admin?error=1');
+    }
+    const imagePath = `/uploads/${req.file.filename}`;
     await dbRun('INSERT INTO gallery_images (title, caption, image_path) VALUES (?, ?, ?)', [title, caption, imagePath]);
     res.redirect('/admin?success=1');
   } catch (error) {
     console.error(error);
     res.status(500).send('Unable to create gallery image.');
+  }
+});
+
+app.post('/admin/about-image', requireAdmin, upload.single('image'), async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.redirect('/admin?error=1');
+    }
+    const imagePath = `/uploads/${req.file.filename}`;
+    const current = await dbGet('SELECT value FROM site_settings WHERE key = ?', ['about_school_image']);
+    if (current && current.value) {
+      deleteFileIfExists(current.value);
+    }
+    await dbRun(
+      'INSERT INTO site_settings (key, value) VALUES (?, ?) ON CONFLICT(key) DO UPDATE SET value = excluded.value',
+      ['about_school_image', imagePath]
+    );
+    res.redirect('/admin?success=1');
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Unable to upload about school image.');
   }
 });
 
