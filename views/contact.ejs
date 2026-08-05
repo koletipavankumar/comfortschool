@@ -1,4 +1,4 @@
-<%- include('partials/header', { site, page, pageTitle: 'Contact Us', user }) %>
+<%- include('partials/header', { site, page, pageTitle: 'Contact Us', adminUser }) %>
 
 <section class="page-title">
   <div class="container">
@@ -13,6 +13,7 @@
     <div class="form-card">
       <h3>Get in touch</h3>
       <form action="/contact" method="post">
+        <%- include('partials/csrf-input') %>
         <div class="form-grid">
           <label>
             Name

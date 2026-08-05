@@ -16,10 +16,40 @@
       <div class="error">Please provide a valid file or selection.</div>
     <% } %>
 
+    <% if (stats) { %>
+      <div class="metrics admin-metrics">
+        <div class="metric-card">
+          <strong><%= stats.banners %></strong>
+          <span>Banners</span>
+        </div>
+        <div class="metric-card">
+          <strong><%= stats.gallery %></strong>
+          <span>Gallery items</span>
+        </div>
+        <div class="metric-card">
+          <strong><%= stats.staff %></strong>
+          <span>Staff profiles</span>
+        </div>
+        <div class="metric-card">
+          <strong><%= stats.pages %></strong>
+          <span>Content pages</span>
+        </div>
+        <div class="metric-card">
+          <strong><%= stats.media %></strong>
+          <span>Uploaded files</span>
+        </div>
+        <div class="metric-card">
+          <strong><%= stats.messages %></strong>
+          <span>Messages</span>
+        </div>
+      </div>
+    <% } %>
+
     <div class="admin-grid">
       <div class="form-card">
         <h3>Update school content</h3>
         <form action="/admin/content" method="post">
+          <%- include('partials/csrf-input') %>
           <div class="form-grid">
             <label class="full-width">School name<input name="school_name" value="<%= site.school_name %>" /></label>
             <label class="full-width">Tagline<input name="school_tagline" value="<%= site.school_tagline %>" /></label>
@@ -52,10 +82,11 @@
         <p class="form-help">Upload the image shown beside the "About our school" section on the home page.</p>
         <% if (site.about_school_image) { %>
           <div class="media-card-list" style="margin-bottom: 1rem;">
-            <img src="<%= site.about_school_image %>" alt="Current about school image" />
+            <img src="<%= site.about_school_image %>" alt="Current about school image" loading="lazy" />
           </div>
         <% } %>
         <form action="/admin/about-image" method="post" enctype="multipart/form-data">
+          <%- include('partials/csrf-input') %>
           <div class="form-grid">
             <label class="full-width">Select image<input type="file" name="image" accept="image/*" required /></label>
             <button class="btn btn-primary full-width" type="submit">Upload about school image</button>
@@ -66,6 +97,7 @@
 
         <h3>Upload banner or event image</h3>
         <form action="/admin/upload" method="post" enctype="multipart/form-data">
+          <%- include('partials/csrf-input') %>
           <div class="form-grid">
             <label class="full-width">Title<input name="title" placeholder="Image title" /></label>
             <label class="full-width">Category<select name="category">
@@ -82,6 +114,7 @@
 
         <h3>Replace an existing image</h3>
         <form action="/admin/replace" method="post" enctype="multipart/form-data">
+          <%- include('partials/csrf-input') %>
           <div class="form-grid">
             <label class="full-width">Select image<select name="mediaId">
               <% mediaItems.forEach((item) => { %>
@@ -103,6 +136,7 @@
       <div class="form-card">
         <h3>Add a homepage banner</h3>
         <form action="/admin/banners" method="post" enctype="multipart/form-data">
+          <%- include('partials/csrf-input') %>
           <label>Title<input name="title" required /></label>
           <label>Subtitle<input name="subtitle" /></label>
           <label>Image<input type="file" name="image" accept="image/*" /></label>
@@ -111,15 +145,17 @@
         <div class="media-list">
           <% banners.forEach((banner) => { %>
             <div class="media-card-list">
-              <img src="<%= banner.file_path %>" alt="<%= banner.title %>" />
+              <img src="<%= banner.file_path %>" alt="<%= banner.title %>" loading="lazy" />
               <div class="content">
                 <h3><%= banner.title %></h3>
                 <p><%= banner.subtitle %></p>
                 <div class="inline-actions">
                   <form action="/admin/banners/<%= banner.id %>/toggle" method="post">
+                    <%- include('partials/csrf-input') %>
                     <button class="btn btn-small btn-primary" type="submit"><%= banner.active ? 'Hide' : 'Show' %></button>
                   </form>
                   <form action="/admin/banners/<%= banner.id %>/delete" method="post">
+                    <%- include('partials/csrf-input') %>
                     <button class="btn btn-small btn-primary" type="submit">Delete</button>
                   </form>
                 </div>
@@ -133,6 +169,7 @@
         <h3>Upload individual gallery image</h3>
         <p class="form-help">Each image is uploaded separately and appears on the Gallery page.</p>
         <form action="/admin/gallery" method="post" enctype="multipart/form-data">
+          <%- include('partials/csrf-input') %>
           <label>Title<input name="title" required /></label>
           <label>Caption<textarea name="caption"></textarea></label>
           <label>Image<input type="file" name="image" accept="image/*" required /></label>
@@ -141,11 +178,12 @@
         <div class="media-list">
           <% gallery.forEach((item) => { %>
             <div class="media-card-list">
-              <img src="<%= item.file_path %>" alt="<%= item.title %>" />
+              <img src="<%= item.file_path %>" alt="<%= item.title %>" loading="lazy" />
               <div class="content">
                 <h3><%= item.title %></h3>
                 <p><%= item.caption %></p>
                 <form action="/admin/gallery/<%= item.id %>/delete" method="post">
+                  <%- include('partials/csrf-input') %>
                   <button class="btn btn-small btn-primary" type="submit">Delete</button>
                 </form>
               </div>
@@ -157,6 +195,7 @@
       <div class="form-card">
         <h3>Add a staff profile</h3>
         <form action="/admin/staff" method="post" enctype="multipart/form-data">
+          <%- include('partials/csrf-input') %>
           <label>Name<input name="name" required /></label>
           <label>Role<input name="role" required /></label>
           <label>Description<textarea name="description"></textarea></label>
@@ -166,12 +205,13 @@
         <div class="media-list">
           <% staff.forEach((person) => { %>
             <div class="media-card-list">
-              <img src="<%= person.file_path %>" alt="<%= person.title %>" />
+              <img src="<%= person.file_path %>" alt="<%= person.title %>" loading="lazy" />
               <div class="content">
                 <h3><%= person.title %></h3>
                 <p><strong><%= person.role %></strong></p>
                 <p><%= person.description %></p>
                 <form action="/admin/staff/<%= person.id %>/delete" method="post">
+                  <%- include('partials/csrf-input') %>
                   <button class="btn btn-small btn-primary" type="submit">Delete</button>
                 </form>
               </div>
@@ -183,6 +223,7 @@
       <div class="form-card">
         <h3>Create a content page</h3>
         <form action="/admin/pages" method="post">
+          <%- include('partials/csrf-input') %>
           <label>Title<input name="title" required /></label>
           <label>Slug<input name="slug" placeholder="about" /></label>
           <label>Content<textarea name="content" rows="6"></textarea></label>
@@ -195,6 +236,7 @@
                 <h3><%= page.title %></h3>
                 <p><a href="/pages/<%= page.slug %>" target="_blank">/pages/<%= page.slug %></a></p>
                 <form action="/admin/pages/<%= page.id %>/delete" method="post">
+                  <%- include('partials/csrf-input') %>
                   <button class="btn btn-small btn-primary" type="submit">Delete</button>
                 </form>
               </div>
@@ -207,15 +249,33 @@
     <div class="section-heading" style="margin-top: 2.5rem;">
       <h2>Uploaded media</h2>
     </div>
-    <div class="media-list">
+    <div class="admin-controls">
+      <div class="filter-group">
+        <label>Search uploaded media
+          <input id="media-search" type="search" placeholder="Search by title or category" />
+        </label>
+      </div>
+      <div class="filter-group">
+        <label>Sort by
+          <select id="media-sort">
+            <option value="newest">Newest first</option>
+            <option value="oldest">Oldest first</option>
+            <option value="title">Title</option>
+            <option value="category">Category</option>
+          </select>
+        </label>
+      </div>
+    </div>
+    <div class="media-list" data-media-list>
       <% mediaItems.forEach((item) => { %>
-        <div class="media-card-list">
-          <img src="<%= item.file_path %>" alt="<%= item.title %>" />
+        <div class="media-card-list" data-search="<%= (item.title + ' ' + item.category).toLowerCase() %>">
+          <img src="<%= item.file_path %>" alt="<%= item.title %>" loading="lazy" />
           <div class="content">
             <h3><%= item.title %></h3>
             <p><strong>Category:</strong> <%= item.category %></p>
             <div class="inline-actions">
               <form action="/admin/media/<%= item.id %>/delete" method="post">
+                <%- include('partials/csrf-input') %>
                 <button class="btn btn-small btn-primary" type="submit">Delete</button>
               </form>
             </div>

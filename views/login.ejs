@@ -4,10 +4,13 @@
   <div class="container">
     <div class="form-card" style="max-width: 480px; margin: 2rem auto;">
       <h2>Admin login</h2>
-      <% if (typeof error !== 'undefined') { %>
+      <% if (typeof expired !== 'undefined' && expired) { %>
+        <div class="error">Your session has expired. Please sign in again.</div>
+      <% } else if (typeof error !== 'undefined') { %>
         <div class="error">Invalid login credentials.</div>
       <% } %>
       <form action="/admin/login" method="post">
+        <%- include('partials/csrf-input') %>
         <div class="form-grid">
           <label class="full-width">
             Username

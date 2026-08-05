@@ -50,6 +50,14 @@
           <a class="<%= page === 'gallery' ? 'active' : '' %>" href="/gallery">Gallery</a>
           <a class="<%= page === 'staff' ? 'active' : '' %>" href="/staff">Staff</a>
           <a class="<%= page === 'contact' ? 'active' : '' %>" href="/contact">Contact</a>
+          <div class="nav-actions">
+            <% if (adminUser) { %>
+              <span class="nav-user">Hello, <%= adminUser.full_name || adminUser.username %></span>
+              <a class="nav-button btn btn-primary" href="/admin/logout">Logout</a>
+            <% } else { %>
+              <a class="nav-button btn btn-primary" href="/admin/login">Login</a>
+            <% } %>
+          </div>
         </nav>
       </div>
     </header>
